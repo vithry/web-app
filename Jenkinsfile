@@ -39,8 +39,8 @@ pipeline {
             script {
               sh "sudo chown -R $USER: ${WORKSPACE}"
               writeFile file: "Dockerfile", text: """FROM tomcat:8.0-alpine
-              COPY .target/hello-world-war-1.0.0.war /usr/local/tomcat/webapps/
-              EXPOSE 8080              
+              COPY /var/lib/jenkins/workspace/web-app@2/target/hello-world-war-1.0.0.war /usr/local/tomcat/webapps/
+              EXPOSE 8080
             """
               dockerImg = docker.build("web-app", '.')
             }
