@@ -16,9 +16,8 @@ pipeline {
             steps {
                 sh 'mvn -B -DskipTests clean package'
                 script {
-                  sh "chown -R $USER: ${WORKSPACE}"
                   writeFile file: "Dockerfile", text: """FROM tomcat:8.0-alpine
-                  COPY /var/lib/jenkins/workspace/web-app@2/target/hello-world-war-1.0.0.war /usr/local/tomcat/webapps/
+                  COPY ./target/hello-world-war-1.0.0.war /usr/local/tomcat/webapps/
                               """
                   dockerImg = docker.build("web-app", '.')
                 }
